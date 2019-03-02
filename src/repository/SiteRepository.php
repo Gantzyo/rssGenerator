@@ -26,10 +26,6 @@ class SiteRepository
     public static function findActiveSites(): array
     {
         $db = ConnectionFactory::getFactory()->getConnection();
-        // return $db->select("site", RepositoryUtils::getDomainColumns(Site::class), [
-        //     "enabled" => true,
-        //     "id" => $db->select("feed_has_site", "Site_id", ["enabled" => true]),
-        // ]);
         return $db->select("site", [
             "[>]feed_has_site" => ["site.id" => "Site_id"],
         ], RepositoryUtils::getDomainColumns(Site::class, "site"), [
