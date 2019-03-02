@@ -10,7 +10,7 @@ $feedId = isset($_GET["id"]) ? $_GET["id"] : "";
 
 if(!empty($feedId)) {
 
-    header("Content-Type: application/rss+xml");
+    header("Content-Type: application/rss+xml; charset=utf-8");
 
     $sites = SiteService::getOrderedSitesByFeed($feedId);
 
