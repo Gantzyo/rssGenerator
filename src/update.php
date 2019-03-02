@@ -7,6 +7,8 @@ use RssGenerator\Service\CookieService as CookieService;
 use RssGenerator\Service\SiteService as SiteService;
 use RssGenerator\Service\LastSiteUpdateService as LastSiteUpdateService;
 
+ignore_user_abort(true);
+
 // Uncomment to unlimit var_dump
 ini_set('xdebug.var_display_max_depth', '-1');
 ini_set('xdebug.var_display_max_children', '-1');
@@ -33,4 +35,5 @@ foreach ($sites as $site) {
     }
 }
 
-var_dump(ConnectionFactory::getFactory()->getConnection()->log());
+echo "OK";
+?>
