@@ -1,39 +1,42 @@
 <?php
 require __DIR__ . '/vendor/autoload.php';
 
-use RssGenerator\Service\SiteService as SiteService;
 use RssGenerator\Service\LastSiteUpdateService as LastSiteUpdateService;
+use RssGenerator\Service\SiteService as SiteService;
+use RssGenerator\Util\RssUtils as RssUtils;
 
 ignore_user_abort(true);
 
 $feedId = isset($_GET["id"]) ? $_GET["id"] : "";
 
-if(!empty($feedId)) {
+if (!empty($feedId)) {
 
     header("Content-Type: application/rss+xml; charset=utf-8");
 
     $sites = SiteService::getOrderedSitesByFeed($feedId);
+    $calledUrl = RssUtils::curPageURL();
 
-    $xml = '<?xml version="1.0" encoding="ISO-8859-1"?>' . "\n";
-    $xml .= '<rss version="2.0">' . "\n";
+    $xml = '<?xml version="1.0" encoding="utf-8"?>' . "\n";
+    $xml .= '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">' . "\n";
     $xml .= '<channel>' . "\n";
+    $xml .= '<atom:link href="' . $calledUrl . '" rel="self" type="application/rss+xml" />' . "\n";
     $xml .= '<title>Sites updates</title>' . "\n";
-    $xml .= '<link></link>' . "\n";
+    $xml .= '<link>' . $calledUrl . '</link>' . "\n";
     $xml .= '<description></description>' . "\n";
 
     foreach ($sites as $site) {
         $lastSiteUpdate = LastSiteUpdateService::getLastSiteUpdate($site);
 
         $xml .= '<item>' . "\n";
-        $xml .= '<title>' . $site->name . '</title>' . "\n";
+        $xml .= '<title>' . $lastSiteUpdate->lastUpdate . '</title>' . "\n";
         $xml .= '<link>' . $site->url . '</link>' . "\n";
         $xml .= '<description>' . "\n";
         $xml .= '<![CDATA[';
         $xml .= '<p><b><a href="' . $site->url . '" target="_blank">' . $lastSiteUpdate->lastUpdate . '</a></b></p>';
         $xml .= ']]>';
         $xml .= '</description>' . "\n";
-        $xml .= '<pubDate>' . $lastSiteUpdate->updateTS . '</pubDate>' . "\n";
-        $xml .= '<guid>' . $lastSiteUpdate->updateTS . "-" . $lastSiteUpdate->Site_id . '</guid>' . "\n";// unique ID -> updateTS-Site_id
+        $xml .= '<pubDate>' . RssUtils::timestampToRFC822($lastSiteUpdate->updateTS) . '</pubDate>' . "\n";
+        $xml .= '<guid isPermaLink="false">' . \urlencode($lastSiteUpdate->updateTS . "-" . $lastSiteUpdate->Site_id) . '</guid>' . "\n"; // unique ID -> updateTS-Site_id
         $xml .= '</item>' . "\n";
     }
 
