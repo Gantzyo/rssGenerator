@@ -33,7 +33,7 @@ class HispashareSiteProcessor extends Singleton implements ISiteProcessor
         $cleanBody = SiteProcessorUtils::getHtmlWithoutScripts($result->body);
 
         // Esto produce alguno warnings pero funciona
-        $value = QueryList::setHtml($cleanBody)->find("h2:contains(\"" . $site->idWeb . "\") + div tr:last td:nth-child(2) a")->text();
+        $value = QueryList::setHtml($cleanBody)->find("h2:contains(\"" . $site->idWeb . "\") ~ div:not(.INFOMSG):first tr:last-child td:nth-child(2) a")->text();
 
         return $value;
     }
