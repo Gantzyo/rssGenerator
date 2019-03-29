@@ -1,8 +1,8 @@
 <?php
 namespace RssGenerator\Processor\Processors;
 
-use Requests;
 use QL\QueryList as QueryList;
+use Requests;
 use RssGenerator\Domain\Cookie as Cookie;
 use RssGenerator\Domain\Site as Site;
 use RssGenerator\Processor\ISiteProcessor as ISiteProcessor;
@@ -34,6 +34,8 @@ class HispashareSiteProcessor extends Singleton implements ISiteProcessor
 
         // Esto produce alguno warnings pero funciona
         $value = QueryList::setHtml($cleanBody)->find("h2:contains(\"" . $site->idWeb . "\") ~ div:not(.INFOMSG):first tr:last-child td:nth-child(2) a")->text();
+
+        $value = $value === '' ? '[ERROR] idWeb not found: "' . $site->idWeb . '"' : $value;
 
         return $value;
     }

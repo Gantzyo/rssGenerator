@@ -26,13 +26,22 @@ if (!empty($feedId)) {
 
     foreach ($sites as $site) {
         $lastSiteUpdate = LastSiteUpdateService::getLastSiteUpdate($site);
+        $updateHasError = (substr($lastSiteUpdate->lastUpdate, 0, 7) === '[ERROR]');
 
         $xml .= '<item>' . "\n";
-        $xml .= '<title>' . $lastSiteUpdate->lastUpdate . '</title>' . "\n";
+        if ($updateHasError) {
+            $xml .= '<title>[ERROR] ' . $site->name . ' at ' . $lastSiteUpdate->updateTS . '</title>' . "\n";
+        } else {
+            $xml .= '<title>' . $lastSiteUpdate->lastUpdate . '</title>' . "\n";
+        }
         $xml .= '<link>' . $site->url . '</link>' . "\n";
         $xml .= '<description>' . "\n";
         $xml .= '<![CDATA[';
-        $xml .= '<p><b><a href="' . $site->url . '" target="_blank">' . $lastSiteUpdate->lastUpdate . '</a></b></p>';
+        if ($updateHasError) {
+            $xml .= '<p>' . $lastSiteUpdate->lastUpdate . '</p>';
+        } else {
+            $xml .= '<p><a href="' . $site->url . '" target="_blank">' . $lastSiteUpdate->lastUpdate . '</a></p>';
+        }
         $xml .= ']]>';
         $xml .= '</description>' . "\n";
         $xml .= '<pubDate>' . RssUtils::timestampToRFC822($lastSiteUpdate->updateTS) . '</pubDate>' . "\n";
