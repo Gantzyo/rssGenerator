@@ -1,9 +1,18 @@
+# allow access
+Order Deny,Allow
+Allow from all
+
 # pretty urls
 Options +FollowSymLinks
 RewriteEngine On
-RewriteBase /
+RewriteBase /public
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
+# everything gets redirected to RewriteBase
+# this case means: ^api/ -> /public/api.php
 RewriteRule ^api/ api.php [L,NC]
+
+RewriteRule ^rss rss.php [L,NC]
+RewriteRule ^update update.php [L,NC]
