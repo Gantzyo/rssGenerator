@@ -1,0 +1,21 @@
+{
+    "name": "gantzyo/rssgenerator",
+    "description": "rssGenerator",
+    "require": {
+        "catfan/medoo": "^1.6",
+        "rmccue/requests": "^1.7",
+        "jaeger/querylist": "^4.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "RssGenerator\\Config\\": "src/config/",
+            "RssGenerator\\Db\\": "src/db/",
+            "RssGenerator\\Repository\\": "src/repository/",
+            "RssGenerator\\Service\\": "src/service/",
+            "RssGenerator\\Domain\\": "src/domain/",
+            "RssGenerator\\Util\\": "src/util/",
+            "RssGenerator\\Processor\\": "src/processor/",
+            "RssGenerator\\Processor\\Processors\\": "src/processor/processors/"
+        }
+    }
+}

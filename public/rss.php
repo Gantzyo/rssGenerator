@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use RssGenerator\Service\LastSiteUpdateService as LastSiteUpdateService;
 use RssGenerator\Service\SiteService as SiteService;
