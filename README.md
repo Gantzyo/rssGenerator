@@ -32,16 +32,17 @@ Se trata de un par de scripts en PHP para generar RSS de las publicaciones en Hi
     composer install
     ```
 
-3. Importa la estructura de base de datos de `docs/schema/rssgenerator_structure.sql`
-4. (Opcional) Importa los datos mínimos para poder generar sitios de `docs/schema/rssgenerator_data.sql` o crea los tuyos propios
-5. Genera las entradas en base de datos:
+3. Configura la conexión a base de datos dentro del fichero `src/config/DbConnection.php` y elige entre **SQLite** (por defecto) o **MySQL**
+4. [**SQLite**] Por defecto se utiliza la base de datos que encontrarás en `config/rssGenerator.db`
+5. [**MYSQL**] Importa la estructura de base de datos de `docs/schema/rssgenerator_structure.sql`
+6. [**MYSQL**] (Opcional) Importa los datos mínimos para poder generar sitios de `docs/schema/rssgenerator_data.sql` o crea los tuyos propios
+7. Genera las entradas en base de datos:
     * **rssgenerator_type**: Contiene los tipos de sitios (Hispashare, DescargasDD)
     * **rssgenerator_cookie**: Contiene las cookies utilizadas para cada tipo de sitio
     * **rssgenerator_site**: Contiene la lista de sitios que se pueden usar en un RSS
     * **rssgenerator_last_site_update**: Contiene la última actualización detectada en un sitio para saber si hay que generar alguna entrada nueva
-    * **rssgenerator_user**: Contiene la lista de usuarios que pueden acceder al generador de RSS
-    * **rssgenerator_userrss**: Contiene la relación entre usuarios y sitios para saber qué entradas queire ver el usuario en su RSS
-6. Configura la conexión a base de datos dentro del fichero `src/config/DbConnection.php`
+    * **rssgenerator_feed**: Contiene la lista de feeds que existen en la aplicación
+    * **rssgenerator_feed_has_site**: Contiene la relación entre  feeds y sitios para saber qué entradas debe generar ese feed para posteriormente visualizarlas desde un lector RSS
 
 ## Dependencias
 

@@ -21,16 +21,16 @@ class FeedHasSiteRepository
     {
         /*
         SELECT s.* FROM rssgenerator_feed_has_site fhs
-        LEFT JOIN rssgenerator_site s ON fhs.Site_id=s.id
-        RIGHT JOIN rssgenerator_last_site_update lsu ON lsu.Site_id = s.id
+        INNER JOIN rssgenerator_site s ON fhs.Site_id=s.id
+        INNER JOIN rssgenerator_last_site_update lsu ON lsu.Site_id = s.id
         WHERE fhs.Feed_id = 1
         AND fhs.enabled = TRUE
         ORDER BY lsu.updateTS DESC, s.id ASC;
          */
         $db = ConnectionFactory::getFactory()->getConnection();
         return $db->select("feed_has_site", [
-            "[>]site" => ["feed_has_site.Site_id" => "id"],
-            "[<]last_site_update" => ["site.id" => "Site_id"],
+            "[><]site" => ["feed_has_site.Site_id" => "id"],
+            "[><]last_site_update" => ["site.id" => "Site_id"],
         ], RepositoryUtils::getDomainColumns(Site::class, "site"), [
             "feed_has_site.Feed_id" => $id,
             "feed_has_site.enabled" => true,

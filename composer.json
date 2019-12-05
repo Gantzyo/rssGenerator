@@ -2,7 +2,7 @@
     "name": "gantzyo/rssgenerator",
     "description": "rssGenerator",
     "require": {
-        "catfan/medoo": "^1.6",
+        "catfan/medoo": "^1.7",
         "rmccue/requests": "^1.7",
         "jaeger/querylist": "^4.1"
     },
