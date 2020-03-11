@@ -43,7 +43,7 @@ foreach ($sites as $site) {
     echo "<br/>";
 
     // Update when value changes
-    if($result !== $lastSiteUpdate->lastUpdate) {
+    if(!empty($result) && $result !== $lastSiteUpdate->lastUpdate) {
         LastSiteUpdateService::update($site, $result);
     }
     echo "<br/>";
