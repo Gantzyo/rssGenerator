@@ -18,18 +18,23 @@ class SiteProcessorChooser
          * @var ISiteProcessor
          */
         $processor;
+		
+		echo "Recuperando processor para el tipo ".$site->Type_type."<br/>";
 
         switch ($site->Type_type) {
             case Type::SITE_HISPASHARE:
-                $processor = HispashareSiteProcessor::instance();
+                $processor = new HispashareSiteProcessor();
                 break;
             case Type::SITE_DESCARGASDD:
-                $processor = DescargasDDSiteProcessor::instance();
+				echo "Recuperando processor para el tipo ".Type::SITE_DESCARGASDD."<br/>";
+                $processor = new DescargasDDSiteProcessor();
                 break;
             default:
-                $processor = BlankSiteProcessor::instance();
+				echo "Recuperando processor para el tipo BLANK<br/>";
+                $processor = new BlankSiteProcessor();
                 break;
         }
+		echo "Processor: ".get_class($processor)."<br/>";
         return $processor;
     }
 }

@@ -55,5 +55,5 @@ if (!empty($feedId)) {
     echo $xml;
 
 } else {
-    echo "Error";
+    echo "Error, missing query parameter 'id'";
 }

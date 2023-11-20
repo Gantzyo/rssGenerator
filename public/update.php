@@ -28,12 +28,16 @@ foreach ($sites as $site) {
     echo "<br/>";
     // Retrieve cookies for this type of site
     if (!isset($cookies[$site->Type_type])) {
+		echo "Cargando cookies para el tipo ".$site->Type_type."<br/>";
         $cookies[$site->Type_type] = CookieService::getSiteCookies($site);
+		echo "Cookies cargadas<br/>";
     }
     
     // Process site
+	echo "Recuperando processor<br/>";
     $processor = SiteProcessorChooser::getProcessor($site);
-    $result = $processor->getSiteUpdate($site, $cookies[$site->Type_type]);
+    echo "Procesando sitio<br/>";
+	$result = $processor->getSiteUpdate($site, $cookies[$site->Type_type]);
     echo "Nuevo valor: [".$result."]";
     echo "<br/>";
 
@@ -44,7 +48,9 @@ foreach ($sites as $site) {
 
     // Update when value changes
     if(!empty($result) && $result !== $lastSiteUpdate->lastUpdate) {
-        LastSiteUpdateService::update($site, $result);
+        echo "Actualizando valor<br/>";
+		LastSiteUpdateService::update($site, $result);
+		echo "Valor actualizado<br/>";
     }
     echo "<br/>";
 }
